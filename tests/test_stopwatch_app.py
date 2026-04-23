@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 from types import SimpleNamespace
 from typing import cast
 
@@ -15,7 +16,7 @@ from stopwatch_tutorial.core import (
     start_timer,
     stop_timer,
 )
-from stopwatch_tutorial.ui.app import StopwatchApp
+from stopwatch_tutorial.ui.app import StopwatchApp, screenshot_output_path
 from stopwatch_tutorial.ui.stopwatch import (
     Stopwatch,
     StopwatchControl,
@@ -58,6 +59,67 @@ def test_toggle_dark_switches_between_themes() -> None:
 
     app.action_toggle_dark()
     assert app.theme == "textual-dark"
+
+
+def test_screenshot_output_path_prefers_explicit_path(monkeypatch, tmp_path) -> None:
+    monkeypatch.setattr(
+        "stopwatch_tutorial.ui.app.user_downloads_path",
+        lambda: tmp_path / "downloads",
+    )
+
+    assert screenshot_output_path("./shots") == "./shots"
+
+
+def test_screenshot_output_path_uses_downloads_when_it_exists(
+    monkeypatch, tmp_path
+) -> None:
+    downloads = tmp_path / "downloads"
+    downloads.mkdir()
+    monkeypatch.setattr(
+        "stopwatch_tutorial.ui.app.user_downloads_path",
+        lambda: downloads,
+    )
+
+    assert screenshot_output_path(None) is None
+
+
+def test_screenshot_output_path_falls_back_to_cwd_when_downloads_is_missing(
+    monkeypatch, tmp_path
+) -> None:
+    monkeypatch.setattr(
+        "stopwatch_tutorial.ui.app.user_downloads_path",
+        lambda: tmp_path / "missing-downloads",
+    )
+
+    assert screenshot_output_path(None) == "."
+
+
+def test_deliver_screenshot_uses_resolved_output_path(monkeypatch) -> None:
+    delivered: list[tuple[str | None, str | None, str | None]] = []
+    app = StopwatchApp()
+
+    def fake_deliver_screenshot(
+        self,
+        filename: str | None = None,
+        path: str | None = None,
+        time_format: str | None = None,
+    ) -> str:
+        delivered.append((filename, path, time_format))
+        return "delivery-key"
+
+    monkeypatch.setattr(
+        "textual.app.App.deliver_screenshot",
+        fake_deliver_screenshot,
+    )
+    monkeypatch.setattr(
+        "stopwatch_tutorial.ui.app.user_downloads_path",
+        lambda: Path("/definitely/missing/downloads"),
+    )
+
+    delivery_key = app.deliver_screenshot("shot.svg", None, "%Y")
+
+    assert delivery_key == "delivery-key"
+    assert delivered == [("shot.svg", ".", "%Y")]
 
 
 def test_stopwatch_on_click_ignores_button_clicks(monkeypatch) -> None:

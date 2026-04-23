@@ -1,10 +1,17 @@
 from typing import Literal
 
-from textual.app import App, ComposeResult
+from textual.app import App, ComposeResult, user_downloads_path
 from textual.binding import Binding
 from textual.widgets import Footer, Header
 
 from stopwatch_tutorial.ui.stopwatch import Stopwatch, StopwatchList
+
+
+def screenshot_output_path(path: str | None) -> str | None:
+    """Resolve the screenshot output directory for terminal delivery."""
+    if path is not None:
+        return path
+    return None if user_downloads_path().exists() else "."
 
 
 class StopwatchApp(App):
@@ -138,3 +145,13 @@ class StopwatchApp(App):
         self.theme = (
             "textual-dark" if self.theme == "textual-light" else "textual-light"
         )
+
+    def deliver_screenshot(
+        self,
+        filename: str | None = None,
+        path: str | None = None,
+        time_format: str | None = None,
+    ) -> str | None:
+        """Deliver a screenshot, falling back when Downloads is unavailable."""
+        resolved_path = screenshot_output_path(path)
+        return super().deliver_screenshot(filename, resolved_path, time_format)

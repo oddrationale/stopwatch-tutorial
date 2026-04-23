@@ -4,6 +4,8 @@
 
 A small [Textual](https://textual.textualize.io/) stopwatch app with multiple timers and keyboard-first navigation.
 
+![Stopwatch Tutorial screenshot](assets/screenshot.svg)
+
 ## Requirements
 
 - Python `3.13+`
