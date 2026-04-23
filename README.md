@@ -15,6 +15,12 @@ A small [Textual](https://textual.textualize.io/) stopwatch app with multiple ti
 uv sync
 ```
 
+To install the local Git hooks:
+
+```bash
+uv run pre-commit install --hook-type pre-commit --hook-type pre-push
+```
+
 ## Run
 
 ```bash
@@ -80,3 +86,17 @@ uv run pytest
 The pytest configuration enforces `100%` coverage for `stopwatch_tutorial`.
 
 GitHub Actions also uploads the generated `coverage.xml` report to Codecov.
+
+## Git Hooks
+
+This project uses `pre-commit`:
+
+- `pre-commit`: `ruff format`, `ruff check`
+- `pre-push`: `ty check`, `pytest`
+
+Run all hooks manually with:
+
+```bash
+uv run pre-commit run --all-files
+uv run pre-commit run --hook-stage pre-push --all-files
+```
