@@ -1,5 +1,7 @@
 # Stopwatch Tutorial
 
+[![codecov](https://codecov.io/github/oddrationale/stopwatch-tutorial/branch/main/graph/badge.svg)](https://app.codecov.io/github/oddrationale/stopwatch-tutorial)
+
 A small [Textual](https://textual.textualize.io/) stopwatch app with multiple timers and keyboard-first navigation.
 
 ## Requirements
@@ -76,3 +78,5 @@ uv run pytest
 ```
 
 The pytest configuration enforces `100%` coverage for `stopwatch_tutorial`.
+
+GitHub Actions also uploads the generated `coverage.xml` report to Codecov.
