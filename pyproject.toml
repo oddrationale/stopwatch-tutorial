@@ -2,6 +2,7 @@
 name = "stopwatch-tutorial"
 version = "0.1.0"
 description = "A Textual stopwatch app with keyboard-first controls."
+license = "MIT"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
