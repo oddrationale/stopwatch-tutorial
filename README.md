@@ -31,9 +31,18 @@ You can also run the packaged module directly:
 uv run python -m stopwatch_tutorial
 ```
 
+## Install With `uv tool`
+
+If you want the command installed on your `PATH`, use `uv tool install`:
+
+```bash
+uv tool install git+https://github.com/oddrationale/stopwatch-tutorial
+stopwatch-tutorial
+```
+
 ## Run With `uvx`
 
-From GitHub, `uvx` should run the packaged console script:
+If you want to run it without installing anything, use `uvx`:
 
 ```bash
 uvx --from git+https://github.com/oddrationale/stopwatch-tutorial stopwatch-tutorial
