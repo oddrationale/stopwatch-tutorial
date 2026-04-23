@@ -76,6 +76,9 @@ def elapsed_time(timer_state: TimerState, now: float) -> float:
                 )
                 raise ValueError(msg)
             return accumulated + (now - started_at)
+        case _:
+            msg = f"Unsupported timer state: {timer_state!r}"
+            raise TypeError(msg)
 
 
 def start_timer(timer_state: StoppedTimer, now: float) -> RunningTimer:
@@ -226,6 +229,12 @@ class Stopwatch(HorizontalGroup):
                 self.timer_state = stop_timer(timer_state, now)
             case StopwatchButton.RESET, StoppedTimer() as timer_state:
                 self.timer_state = reset_timer(timer_state)
+            case _:
+                msg = (
+                    "Button press does not match the current timer state, "
+                    f"got button={button.value!r}, timer_state={self.timer_state!r}"
+                )
+                raise RuntimeError(msg)
 
     def compose(self) -> ComposeResult:
         """Create child widgets of a stopwatch."""

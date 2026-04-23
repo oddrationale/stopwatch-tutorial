@@ -49,4 +49,7 @@ Run the project checks with:
 ```bash
 uv run ruff check .
 uv run ty check
+uv run pytest
 ```
+
+The pytest configuration enforces `100%` coverage for `main.py`.

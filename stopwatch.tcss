@@ -12,7 +12,7 @@ Stopwatch.selected {
     border: round $accent;
 }
 
-TimeDisplay {   
+TimeDisplay {
     text-align: center;
     color: $foreground-muted;
     height: 3;
