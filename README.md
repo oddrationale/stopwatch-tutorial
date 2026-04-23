@@ -16,13 +16,27 @@ uv sync
 ## Run
 
 ```bash
-uv run python main.py
+uv run stopwatch-tutorial
 ```
 
 For Textual's live dev mode:
 
 ```bash
-uv run textual run --dev main.py
+uv run textual run --dev stopwatch_tutorial.ui.app:StopwatchApp
+```
+
+You can also run the packaged module directly:
+
+```bash
+uv run python -m stopwatch_tutorial
+```
+
+## Run With `uvx`
+
+From GitHub, `uvx` should run the packaged console script:
+
+```bash
+uvx --from git+https://github.com/oddrationale/stopwatch-tutorial stopwatch-tutorial
 ```
 
 ## Features
@@ -52,4 +66,4 @@ uv run ty check
 uv run pytest
 ```
 
-The pytest configuration enforces `100%` coverage for `main.py`.
+The pytest configuration enforces `100%` coverage for `stopwatch_tutorial`.

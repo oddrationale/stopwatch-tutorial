@@ -5,7 +5,7 @@ from typing import cast
 
 import pytest
 
-from main import (
+from stopwatch_tutorial.core import (
     RunningTimer,
     StopwatchButton,
     StoppedTimer,

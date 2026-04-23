@@ -7,17 +7,19 @@ import pytest
 from textual import events
 from textual.widgets import Button
 
-from main import (
+from stopwatch_tutorial.core import (
     RunningTimer,
-    Stopwatch,
-    StopwatchApp,
     StopwatchButton,
-    StopwatchControl,
     StoppedTimer,
-    TimeDisplay,
     format_time,
     start_timer,
     stop_timer,
+)
+from stopwatch_tutorial.ui.app import StopwatchApp
+from stopwatch_tutorial.ui.stopwatch import (
+    Stopwatch,
+    StopwatchControl,
+    TimeDisplay,
 )
 
 
@@ -25,9 +27,7 @@ def get_stopwatches(app: StopwatchApp) -> list[Stopwatch]:
     return list(app.query(Stopwatch))
 
 
-def get_button(
-    stopwatch: Stopwatch, button: StopwatchButton
-) -> StopwatchControl:
+def get_button(stopwatch: Stopwatch, button: StopwatchButton) -> StopwatchControl:
     return stopwatch.query_one(f"#{button.value}", StopwatchControl)
 
 
@@ -211,7 +211,9 @@ async def test_arrow_navigation_and_add_remove_actions_work_end_to_end() -> None
 
 
 @pytest.mark.asyncio
-async def test_mouse_selection_and_running_non_selected_timer_behave_correctly() -> None:
+async def test_mouse_selection_and_running_non_selected_timer_behave_correctly() -> (
+    None
+):
     app = StopwatchApp()
 
     async with app.run_test(size=(100, 40)) as pilot:

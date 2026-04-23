@@ -1,12 +1,15 @@
 [project]
 name = "stopwatch-tutorial"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Textual stopwatch app with keyboard-first controls."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "textual>=8.2.4",
 ]
+
+[project.scripts]
+stopwatch-tutorial = "stopwatch_tutorial.cli:main"
 
 [dependency-groups]
 dev = [
@@ -21,8 +24,17 @@ dev = [
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
-addopts = "--cov=main --cov-branch --cov-report=term-missing --cov-fail-under=100"
+addopts = "--cov=stopwatch_tutorial --cov-branch --cov-report=term-missing --cov-fail-under=100"
 
 [tool.coverage.run]
 branch = true
-source = ["main"]
+source = ["stopwatch_tutorial"]
+
+[tool.coverage.report]
+exclude_also = [
+    "if __name__ == .__main__.:",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.7,<0.12"]
+build-backend = "uv_build"
