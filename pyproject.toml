@@ -20,7 +20,7 @@ dev = [
     "pytest-cov>=7.0.0",
     "ruff>=0.15.11",
     "textual-dev>=1.8.0",
-    "ty>=0.0.32",
+    "ty>=0.0.34",
 ]
 
 [tool.pytest.ini_options]
